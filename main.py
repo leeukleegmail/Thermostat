@@ -2,14 +2,17 @@ import BME280
 from utime import sleep
 import ssd1306
 from machine import Pin, I2C
+import tsl2561
 
 i2c = I2C(scl=Pin(5), sda=Pin(4))
 
 bme = BME280.BME280(i2c=i2c)  # addr 118
 display = ssd1306.SSD1306_I2C(128, 64, i2c)  # addr 60
+lux = tsl2561.TSL2561(i2c=i2c)
 pin = Pin(14, Pin.IN, Pin.PULL_UP)  # D5
 
 while True:
+    print(lux.read())
     display.fill(0)
     display.show()
     if not pin.value():
